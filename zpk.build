@@ -1,1 +1,27 @@
+package {
+  name        = "nim"
+  version     = "2.2.12"
+  arch        = ["x86_64"]
+  description = "Kompilator Nim + nimble (menedzer pakietow) + narzedzia (nimgrep, nimpretty, nimsuggest, testament) -- budowane ze zrodel"
+  depends_on  = ["gcc"]
+}
 
+recipe {
+  file = "recipe.janet"
+  lang = "janet"
+}
+
+# Nim samo NIE cross-kompiluje siebie -- `build.sh` bootstrapuje kompilator
+# z dolaczonych `csources` na HOSCIE, wiec ten blok ma sens tylko jesli
+# budujesz na maszynie danej architektury (albo pod QEMU, patrz
+# ZPM_QEMU_STATIC w recipe.janet). Zostawione jako punkt startowy --
+# odkomentuj i dostosuj, jesli Twoje `gcc`/`binutils` maja inne prefiksy.
+# toolchains {
+#   aarch64 = "aarch64-linux-gnu-"
+# }
+
+release {
+  repo       = "https://github.com/Zenit-Linux/own-repository"
+  repo_file  = "repo/own-repository.json"
+  asset_name = "nim"
+}
